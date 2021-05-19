@@ -2,29 +2,24 @@
 
 int	main(void)
 {
-	int	x;
-	int	y;
-	int	w;
-	int	h;
-	int	min_a;
-	int	min_b;
+	int		x;
+	int		y;
+	int		w;
+	int		h;
+	int		min;
 
-	scanf ("%d %d %d %d", &x, &y, &w, &h);
-
-	if ((w - x) > x)
-		min_a = x;
-	else
-		min_a = w - x;
-	if ((h - y) > y)
-		min_b = y;
-	else
-		min_b = h - y;
-
-	if (min_a < min_b)
-		printf ("%d", min_a);
-	else
-		printf ("%d", min_b);
-
+	scanf("%d %d %d %d", &x, &y, &w, &h);
+	
+	min = 1000;
+	if (min > h - y)
+		min =  h - y;
+	if (min > y)
+		min = y;
+	if (min > w - x)
+		min = w - x;
+	if (min > x)
+		min = x;
+	printf("%d\n", min);
 
 	return (0);
 }
