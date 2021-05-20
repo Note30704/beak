@@ -1,18 +1,17 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef	struct	c_point
+typedef	struct
 {
-	char str[51];
+	char	str[51];
+	int		len;
+}				a_point;
+
+a_point	g_box[20000];
+
+int		ft_strlen(char *str)
+{
 	int	len;
-}				w_point;
 
-w_point	g_box[20000];
-
-int	ft_strlen(char *str)
-{
-	int len;
-	
 	len = 0;
 	while (*str)
 	{
@@ -22,7 +21,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int		ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2)
 	{
@@ -34,7 +33,7 @@ int	ft_strcmp(char *s1, char *s2)
 	return (*s1 - *s2);
 }
 
-void	ft_merge(int start, int mid, int end, w_point *arr)
+void	ft_merge(int start, int mid, int end, a_point *str)
 {
 	int	i;
 	int	j;
@@ -46,30 +45,30 @@ void	ft_merge(int start, int mid, int end, w_point *arr)
 	k = start;
 	while (i <= mid && j <= end)
 	{
-		if (arr[i].len < arr[j].len)
+		if (str[i].len < str[j].len)
 		{
-			g_box[k] = arr[i];
+			g_box[k] = str[i];
 			k++;
 			i++;
 		}
-		else if (arr[i].len == arr[j].len)
+		else if (str[i].len == str[j].len)
 		{
-			if (ft_strcmp(arr[i].str, arr[j].str) < 0)
+			if (ft_strcmp(str[i].str, str[j].str) < 0)
 			{
-				g_box[k] = arr[i];
+				g_box[k] = str[i];
 				k++;
 				i++;
 			}
 			else
 			{
-				g_box[k] = arr[j];
+				g_box[k] = str[j];
 				k++;
 				j++;
 			}
 		}
 		else
 		{
-			g_box[k] = arr[j];
+			g_box[k] = str[j];
 			k++;
 			j++;
 		}
@@ -79,7 +78,7 @@ void	ft_merge(int start, int mid, int end, w_point *arr)
 		l = j;
 		while (l <= end)
 		{
-			g_box[k] = arr[l];
+			g_box[k] = str[l];
 			k++;
 			l++;
 		}
@@ -89,67 +88,54 @@ void	ft_merge(int start, int mid, int end, w_point *arr)
 		l = i;
 		while (l <= mid)
 		{
-			g_box[k] = arr[l];
+			g_box[k] = str[l];
 			k++;
 			l++;
 		}
 	}
-
 	i = start;
 	while (i <= end)
 	{
-		arr[i] = g_box[i];
+		str[i] = g_box[i];
 		i++;
 	}
 }
 
-void	ft_msort(int start, int end, w_point *arr)
+void	ft_msort(int start, int end, a_point *str)
 {
 	int	mid;
 
 	if (start < end)
 	{
 		mid = (start + end) / 2;
-		ft_msort(start, mid, arr);
-		ft_msort(mid + 1, end, arr);
-		ft_merge(start, mid, end, arr);
+		ft_msort(start, mid, str);
+		ft_msort(mid + 1, end, str);
+		ft_merge(start, mid, end, str);
 	}
 }
 
-int	main(void)
+int		main(void)
 {
-	int		n;
 	int		i;
-	int		j;
-	w_point	*arr;
+	int		n;
+	a_point	str[20000];
 
 	scanf("%d", &n);
-
-	arr = (w_point *)malloc(sizeof(w_point) * (n + 1));
-
 	i = 0;
 	while (i < n)
 	{
-		scanf("%s", arr[i].str);
-		arr[i].len = ft_strlen(arr[i].str);
+		scanf("%s", str[i].str);
+		str[i].len = ft_strlen(str[i].str);
 		i++;
 	}
-
-	ft_msort(0, n - 1, arr);
-
-	i = 0;
+	ft_msort(0, n - 1, str);
+	printf("%s\n", str[0].str);
+	i = 1;
 	while (i < n)
 	{
-		if (i == 0)
-			printf("%s\n", arr[i].str);
-		else
-		{
-			if (ft_strcmp(arr[i - 1].str, arr[i].str) != 0)
-			printf("%s\n", arr[i].str);
-		}
+		if (ft_strcmp(str[i - 1].str, str[i].str) != 0)
+			printf("%s\n", str[i].str);
 		i++;
 	}
-	
-	free(arr);
 	return (0);
-}	
+}
