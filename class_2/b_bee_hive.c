@@ -2,20 +2,19 @@
 
 int	main(void)
 {
-	long long	n;
-	int	path;
-	int	h_num;
+	int	n;
+	int	room;
+	int	count;
 
-	scanf ("%lld", &n);
+	scanf("%d", &n);
 
-	h_num = 1;
-	path = 1;
-	while (h_num < n)
+	room= 1;
+	count = 1;
+	while (room < n)
 	{
-	 	h_num = h_num + (path * 6);
-		path++;
+		room = room + (count * 6);
+		count++;
 	}
-	printf ("%d", path);
-
+	printf("%d", count);
 	return (0);
 }
