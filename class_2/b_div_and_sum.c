@@ -1,40 +1,37 @@
 #include <stdio.h>
 
-int	make_sum(int x)
+int	div_num(int	before)
 {
 	int	sum;
-	int	num;
 
-	num = x;
 	sum = 0;
-	while (num != 0)
+	while (before != 0)
 	{
-		sum += num % 10;
-		num /= 10;
+		sum = sum + before % 10;
+		before = before / 10;
 	}
-	sum += x;
 	return (sum);
 }
 
 int	main(void)
 {
+	int	i;
 	int	n;
-	long long	before;
-	long long	i;
+	int	sum;
 
 	scanf("%d", &n);
-	
+
 	i = 0;
-	while (i < 1000000)
+	while (i < n)
 	{
-		if (make_sum(i) == n)
+		sum = div_num(i);
+		if (i + sum == n)
 		{
-			before = i;
-			break;
+			printf("%d\n", i);
+			return (0);
 		}
 		i++;
 	}
-	printf ("%lld", before);
-
+	printf("0\n");
 	return (0);
 }
