@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int	box[1000000];
+int	g_box[1000000];
 
-void	ft_merge(int start, int mid, int end, int *arr)
+void	ft_merge(int start, int mid, int end, int *num)
 {
 	int	i;
 	int	j;
@@ -13,28 +12,27 @@ void	ft_merge(int start, int mid, int end, int *arr)
 	i = start;
 	j = mid + 1;
 	k = start;
-	while (i <= mid && j<= end)
+	while (i <= mid && j <= end)
 	{
-		if (arr[i] <= arr[j])
+		if (num[i] < num[j])
 		{
-			box[k] = arr[i];
+			g_box[k] = num[i];
 			k++;
 			i++;
 		}
 		else
 		{
-			box[k] = arr[j];
+			g_box[k] = num[j];
 			k++;
 			j++;
 		}
 	}
-	
 	if (i > mid)
 	{
 		l = j;
 		while (l <= end)
 		{
-			box[k] = arr[l];
+			g_box[k] = num[l];
 			k++;
 			l++;
 		}
@@ -44,55 +42,52 @@ void	ft_merge(int start, int mid, int end, int *arr)
 		l = i;
 		while (l <= mid)
 		{
-			box[k] = arr[l];
+			g_box[k] = num[l];
 			k++;
 			l++;
 		}
 	}
-
-	l = start;
-	while (l <= end)
+	i = start;
+	while (i <= end)
 	{
-		arr[l] = box[l];
-		l++;
+		num[i] = g_box[i];
+		i++;
 	}
 }
 
-void	ft_msort(int start, int end, int *arr)
+void	ft_msort(int start, int end, int *num)
 {
-	int mid;
+	int	mid;
 
 	if (start < end)
 	{
 		mid = (start + end) / 2;
-		ft_msort(start, mid, arr);
-		ft_msort(mid + 1, end, arr);
-		ft_merge(start, mid, end, arr);
+		ft_msort(start, mid, num);
+		ft_msort(mid + 1, end, num);
+		ft_merge(start, mid, end, num);
 	}
 }
 
 int	main(void)
 {
-	int	n;
 	int	i;
-	int	*arr;
+	int	n;
+	int	num[1000000];
 
 	scanf("%d", &n);
 
-	arr = (int *)malloc(sizeof(int) * n);
 	i = 0;
 	while (i < n)
 	{
-		scanf("%d", &arr[i]);
+		scanf("%d", &num[i]);
 		i++;
 	}
-	ft_msort(0, n - 1, arr);
+	ft_msort(0, n - 1, num);
 	i = 0;
 	while (i < n)
 	{
-		printf("%d\n", arr[i]);
+		printf("%d\n", num[i]);
 		i++;
 	}
-	free(arr);
 	return (0);
 }
