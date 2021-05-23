@@ -1,21 +1,22 @@
 #include <stdio.h>
 
-int ft_maxmin(int a, int b)
+int	ft_uclid(int x, int y)
 {
-	return (b? ft_maxmin(b, a % b) : a);
+	return (y ? ft_uclid(y, x % y) : x);
 }
 
 int	main(void)
 {
-	int	n;
-	int	m;
+	int	x;
+	int	y;
+	int	LCM;
+	int	GCD;
 
-	scanf("%d %d", &n, &m);
+	scanf("%d%d", &x, &y);
+	LCM = ft_uclid(x, y);
+	GCD = (x * y) / LCM;
 
-	printf("%d\n", ft_maxmin(n, m));
-	printf("%d", n * m / ft_maxmin(n, m));
-
+	printf("%d\n", LCM);
+	printf("%d", GCD);
 	return (0);
 }
-
-// 유클리드 호제법
