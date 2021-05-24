@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+int    g_box[500000];
+
 int	ft_start(int start, int end, int *arr, int att)
 {
 	int	mid;
@@ -30,39 +32,71 @@ int	ft_end(int start, int end, int *arr, int att)
 	return (end);
 }
 
-void	ft_qsort(int start, int end, int *arr)
+void    ft_merge(int start, int mid, int end, int *arr)
 {
-	int	key;
-	int	i;
-	int	j;
-	int	tmp;
+    int    i;
+    int    j;
+    int    k;
+    int    l;
+    
+    i = start;
+    j = mid + 1;
+    k = start;
+    while (i <= mid && j <= end)
+    {
+        if (arr[i] < arr[j])
+        {
+            g_box[k] = arr[i];
+            k++;
+            i++;
+        }
+        else
+        {
+            g_box[k] = arr[j];
+            k++;
+            j++;
+        }
+    }
+    if (i > mid)
+    {
+        l = j;
+        while (l <= end)
+        {
+            g_box[k] = arr[l];
+            k++;
+            l++;
+        }
+    }
+    else
+    {
+        l = i;
+        while (l <= mid)
+        {
+            g_box[k] = arr[l];
+            k++;
+            l++;
+        }
+    }
+    i = start;
+    while (i <= end)
+    {
+        arr[i] = g_box[i];
+        i++;
+    }
+}
 
-	if (start >= end)
-		return ;
-	key = start;
-	i = start + 1;
-	j = end;
-	while (i <= j)
-	{
-		while (arr[i] <= arr[key])
-			i++;
-		while (arr[j] > arr[key] && j >start)
-			j--;
-		if (i > j)
-		{
-			tmp = arr[j];
-			arr[j] =arr[key];
-			arr[key] = tmp;
-		}
-		else
-		{
-			tmp = arr[j];
-			arr[j] = arr[i];
-			arr[i] = tmp;
-		}
-	}
-	ft_qsort(start, j - 1, arr);
-	ft_qsort(j + 1, end, arr);
+
+void    ft_msort(int start, int end, int *arr)
+{
+    int    mid;
+    
+    if (start < end)
+    {
+        mid = (start + end) / 2;
+        ft_msort(start, mid, arr);
+        ft_msort(mid + 1, end, arr);
+        ft_merge(start, mid, end, arr);
+    }
 }
 
 int	main(void)
@@ -82,7 +116,7 @@ int	main(void)
 		scanf("%d", &arr[i]);
 		i++;
 	}
-	ft_qsort(0, n - 1, arr);
+	ft_msort(0, n - 1, arr);
 
 	scanf("%d", &m);
 
