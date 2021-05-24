@@ -1,27 +1,26 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int		near_blackjack(int n, int m, int *arr)
+void	find_blackjack(int n, int m, int *card)
 {
 	int	i;
 	int	j;
 	int	k;
-	int	total;
+	int	max;
 
-	total = 0;
+	max = 0;
 	i = 0;
-	while (i < n)
+	while (i < n - 2)
 	{
 		j = i + 1;
-		while (j < n)
+		while (j < n - 1)
 		{
 			k = j + 1;
 			while (k < n)
 			{
-				if (arr[i] + arr[j] + arr[k] <= m)
+				if (card[i] + card[j] + card[k] <= m)
 				{
-					if ( total < arr[i] + arr[j] + arr[k])
-						total = arr[i] + arr[j] + arr[k];
+					if (max < card[i] + card[j] + card[k])
+						max = card[i] + card[j] + card[k];
 				}
 				k++;
 			}
@@ -29,10 +28,10 @@ int		near_blackjack(int n, int m, int *arr)
 		}
 		i++;
 	}
-	return (total);
+	printf("%d", max);
 }
 
-void	qsort_arr(int start, int end, int *arr)
+void	ft_qsort(int start, int end, int *card)
 {
 	int	key;
 	int	i;
@@ -46,49 +45,43 @@ void	qsort_arr(int start, int end, int *arr)
 	j = end;
 	while (i <= j)
 	{
-		while (arr[i] <= arr[key])
+		while (card[i] <= card[key])
 			i++;
-		while (arr[j] > arr[key] && j > start)
+		while (card[j] > card[key] && j > start)
 			j--;
 		if (i > j)
 		{
-			tmp = arr[j];
-			arr[j] = arr[key];
-			arr[key] = tmp;
+			tmp = card[j];
+			card[j] = card[key];
+			card[key] = tmp;
 		}
 		else
 		{
-			tmp = arr[j];
-			arr[j] = arr[i];
-			arr[i] = tmp;
+			tmp = card[j];
+			card[j] = card[i];
+			card[i] = tmp;
 		}
 	}
-	qsort_arr(start, j - 1, arr);
-	qsort_arr(j + 1, end, arr);
-
+	ft_qsort(start, j - 1, card);
+	ft_qsort(j + 1, end, card);
 }
 
-int	main(void)
+int		main(void)
 {
+	int	i;
 	int	n;
 	int	m;
-	int	i;
-	int	j;
-	int	*arr;
-	int	total;
+	int	sum;
+	int	card[100];
 
 	scanf("%d %d", &n, &m);
-	
-	arr = (int *)malloc(sizeof(int) * (n + 1));
-	i  = 0;
+	i = 0;
 	while (i < n)
 	{
-		scanf("%d", &arr[i]);
+		scanf("%d", &card[i]);
 		i++;
 	}
-	qsort_arr(0, n - 1, arr);
-	total = near_blackjack(n, m, arr);
-	printf ("%d", total);
-	free(arr);
+	ft_qsort(0, n - 1, card);
+	find_blackjack(n, m, card);
 	return (0);
 }
