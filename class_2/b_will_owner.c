@@ -2,38 +2,38 @@
 
 int	main(void)
 {
-	int	t;
+	int	T;
 	int	k;
 	int	n;
 	int	i;
 	int	j;
-	int arr[15][15] = {0,};
+	int	apt[15][15] = {0,};
 
-	scanf ("%d", &t);
+	scanf("%d", &T);
 
-	while (t)
+	i = 0;
+	while (i < 15)
+	{
+		apt[0][i] = i;
+		i++;
+	}
+	while (T)
 	{
 		scanf("%d %d", &k, &n);
-		i = 0;
-		while (i <= n)
-		{
-			arr[0][i] = i;
-			i++;
-		}
+		
 		i = 1;
-		while (i <= n)
+		while (i <= k)
 		{
 			j = 1;
 			while (j <= n)
 			{
-				arr[i][j] = arr[i - 1][j] + arr[i][j - 1];
+				apt[i][j] = apt[i - 1][j] + apt[i][j - 1];
 				j++;
 			}
 			i++;
 		}
-		printf ("%d\n", arr[k][n]);
-		t--;
+		printf("%d\n", apt[k][n]);
+		T--;
 	}
-
 	return (0);
 }
