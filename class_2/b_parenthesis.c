@@ -1,19 +1,19 @@
 #include <stdio.h>
 
-int	str_len(char *str)
+int	ft_strlen(char *VPS)
 {
 	int	len;
 
 	len = 0;
-	while (*str)
+	while (*VPS)
 	{
-		str++;
+		VPS++;
 		len++;
 	}
 	return (len);
 }
 
-int	check_parenthesis(int len, char *p)
+int	ft_checker(int len, char *VPS)
 {
 	int	i;
 	int	count;
@@ -22,16 +22,10 @@ int	check_parenthesis(int len, char *p)
 	i = 0;
 	while (i < len)
 	{
-		if (p[i] == '(')
-		{
-			p[i] = 1 + count;
+		if (VPS[i] == '(')
 			count++;
-		}
 		else
-		{
-			p[i] = len / 2 - count;
 			count--;
-		}
 		if (count < 0)
 			return (0);
 		i++;
@@ -42,25 +36,27 @@ int	check_parenthesis(int len, char *p)
 		return (1);
 }
 
+
 int	main(void)
 {
-	int		t;
+	int		n;
 	int		len;
 	int		ans;
-	char	p[51];
+	char	VPS[51];
+
+	scanf("%d", &n);
 	
-	scanf("%d", &t);
-	
-	while (t)
+	while (n)
 	{
-		scanf("%s", p);
-		len = str_len(p);
-		ans = check_parenthesis(len, p);
-		if (ans == 1)
+		scanf("%s", VPS);
+		
+		len = ft_strlen(VPS);
+		ans = ft_checker(len, VPS);
+		if (ans)
 			printf("YES\n");
 		else
 			printf("NO\n");
-		t--;
+		n--;
 	}
-	return (0);
+	return(0);
 }
