@@ -1,45 +1,39 @@
 #include <stdio.h>
 
-typedef struct	c_point
+typedef	struct	c_point
 {
 	int	x;
 	int	y;
-	int	num;
-}				h_point;
+}				w_point;
 
 int	main(void)
 {
-	int	n;
 	int	i;
 	int	j;
-	h_point	human[50];
+	int	n;
+	int	count;
+	w_point	grade[50];
 
 	scanf("%d", &n);
-
 	i = 0;
 	while (i < n)
 	{
-		scanf("%d %d", &human[i].x, &human[i].y);
-		human[i].num = 1;
+		scanf("%d %d", &grade[i].x, &grade[i].y);
 		i++;
 	}
-	if (n == 1)
-		printf("1");
-	else
+	i = 0;
+	while (i < n)
 	{
-		i = 0;
-		while (i < n)
+		count = 1;
+		j = 0;
+		while (j < n)
 		{
-			j = 0;
-			while (j < n)
-			{
-				if ((human[i].x < human[j].x) && (human[i].y < human[j].y ))
-					human[i].num++;
-				j++;
-			}
-			printf("%d ", human[i].num);
-			i++;
+			if (grade[i].x < grade[j].x && grade[i].y < grade[j].y)
+				count++;
+			j++;
 		}
+		printf("%d ", count);
+		i++;
 	}
 	return (0);
 }
