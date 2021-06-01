@@ -2,30 +2,29 @@
 
 int	main(void)
 {
-	int	n;
-	int	i;
-	int	x;
-	int	y;
-	int	x1;
-	int	visitor;
+	int	t;
+	int	h;
+	int	w;
+	int	num;
+	int	front;
+	int	end;
 
-	scanf("%d", &n);
-
-	i = 0;
-	while (i < n)
-	{	
-		scanf("%d %d %d", &x, &y, &visitor);		
-	
-		x1 = x;
-		if (visitor % x == 0)
-			y = visitor / x;
+	scanf("%d", &t);
+	while(t)
+	{
+		scanf("%d %d %d", &h, &w, &num);
+		if (num % h != 0)
+		{
+			front = num % h;
+			end = num / h + 1;
+		}
 		else
 		{
-			x = visitor % x1;
-			y = visitor / x1 + 1;
+			front = h;
+			end = num / h;
 		}
-		printf("%d%02d\n", x, y);
-		i++;
+		printf("%d%02d\n", front, end);
+		t--;
 	}
-	return(0);
+	return (0);
 }
