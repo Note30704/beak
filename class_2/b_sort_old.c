@@ -3,14 +3,14 @@
 
 typedef	struct	c_point
 {
-	int	old;
-	int	num;
-	char str[101];
-}				n_point;
+	int		age;
+	char	name[101];
+	int		num;
+}				a_point;
 
-n_point	g_box[100000];
+a_point	g_box[100000];
 
-void	ft_merge(int start, int mid, int end, n_point *name)
+void	ft_merge(int start, int mid, int end, a_point *human)
 {
 	int	i;
 	int	j;
@@ -22,35 +22,32 @@ void	ft_merge(int start, int mid, int end, n_point *name)
 	k = start;
 	while (i <= mid && j <= end)
 	{
-		if (name[i].old < name[j].old)
+		if (human[i].age < human[j].age)
 		{
-			g_box[k] = name[i];
+			g_box[k] = human[i];
 			k++;
 			i++;
 		}
-		else
+		else if (human[i].age == human[j].age)
 		{
-			if (name[i].old == name[j].old)
+			if (human[i].num < human[j].num)
 			{
-				if (name[i].num < name[j].num)
-				{
-					g_box[k] = name[i];
-					k++;
-					i++;
-				}
-				else
-				{
-					g_box[k] = name[j];
-					k++;
-					j++;
-				}
+				g_box[k] = human[i];
+				k++;
+				i++;
 			}
 			else
 			{
-				g_box[k] = name[j];
+				g_box[k] = human[j];
 				k++;
 				j++;
 			}
+		}
+		else
+		{
+			g_box[k] = human[j];
+			k++;
+			j++;
 		}
 	}
 	if (i > mid)
@@ -58,7 +55,7 @@ void	ft_merge(int start, int mid, int end, n_point *name)
 		l = j;
 		while (l <= end)
 		{
-			g_box[k] = name[l];
+			g_box[k] = human[l];
 			k++;
 			l++;
 		}
@@ -68,7 +65,7 @@ void	ft_merge(int start, int mid, int end, n_point *name)
 		l = i;
 		while (l <= mid)
 		{
-			g_box[k] = name[l];
+			g_box[k] = human[l];
 			k++;
 			l++;
 		}
@@ -76,50 +73,45 @@ void	ft_merge(int start, int mid, int end, n_point *name)
 	i = start;
 	while (i <= end)
 	{
-		name[i] = g_box[i];
+		human[i] = g_box[i];
 		i++;
 	}
 }
 
-void	ft_msort(int start, int end, n_point *name)
+void	ft_msort(int start, int end, a_point *human)
 {
 	int	mid;
 
 	if (start < end)
 	{
 		mid = (start + end) / 2;
-		ft_msort(start, mid, name);
-		ft_msort(mid + 1, end, name);
-		ft_merge(start, mid, end, name);
+		ft_msort(start, mid, human);
+		ft_msort(mid + 1, end, human);
+		ft_merge(start, mid, end, human);
 	}
 }
 
 int	main(void)
 {
-	int	n;
-	int	i;
-	n_point	*name;
+	int		i;
+	int		n;
+	a_point	*human;
 
 	scanf("%d", &n);
-
-	name = (n_point *)calloc(sizeof(n_point), n);
-
+	human = (a_point *)malloc(sizeof(a_point) * n);
 	i = 0;
 	while (i < n)
 	{
-		scanf("%d %s", &name[i].old, name[i].str);
-		name[i].num = i;
+		scanf("%d %s", &human[i].age, human[i].name);
+		human[i].num = i;
 		i++;
 	}
-
-	ft_msort(0, n - 1, name);
-
+	ft_msort(0, n - 1, human);
 	i = 0;
 	while (i < n)
 	{
-		printf("%d %s\n", name[i].old, name[i].str);
+		printf("%d %s\n", human[i].age, human[i].name);
 		i++;
 	}
-	free (name);
 	return (0);
 }
