@@ -15,7 +15,7 @@ int	main(void)
 	int	i;
 	int	N;
 	int	K;
-	int	yosepuse[1000] = {0,};
+	int	yosepuse[100000] = {0,};
 	int	count;
 
 	scanf("%d %d", &N, &K);
