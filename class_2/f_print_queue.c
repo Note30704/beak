@@ -1,49 +1,50 @@
 #include <stdio.h>
 
-void	print_queue(int i, int N, int M, int count, int *queue)
+typedef	struct	c_point
 {
-	int	max;
+	int	queue;
+	int	count;
+}				Q_point;
 
-	if (queue[M] == 0)
-		return ;
-	max = 0;
-	while (i < N)
-	{
-		if (queue[i] > max)
-			max = queue[i];
-		i++;
-	}
-	i = 0;
-	while (queue[i] != max)
-		i++;
-	queue[i] = 0;
-	count++;
-	print_queue(i, N, M, count, queue);
-}
+Q_point	g_box[100];
 
 int	main(void)
 {
-	int	i;
-	int	T;
-	int	N;
-	int	M;
-	int	count;
-	int	queue[100];
+	int		i;
+	int		T;
+	int		N;
+	int		M;
+	Q_point	p_q[10000];
 
 	scanf("%d", &T);
 	while (T)
 	{
 		scanf("%d %d", &N, &M);
-		count = 0;
 		i = 0;
 		while (i < N)
 		{
-			scanf("%d", &queue[i]);
+			scanf("%d", &p_q[i].queue);
+			p_q[i].count = i;
 			i++;
 		}
 		i = 0;
-		print_queue(i, N, M, count, queue);
+		while (i < N)
+		{
+			printf("queue = %d\n	count = %d", p_q[i].queue, p_q[i].count);
+			printf("\n");
+			i++;
+		}	
+
+		printf("\n\n");
+		i = 0;
+		while (i < N)
+		{
+			printf("queue = %d\n	count = %d", p_q[i].queue, p_q[i].count);
+			printf("\n");
+			i++;
+		}
 		T--;
+
 	}
 	return (0);
 }
