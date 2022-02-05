@@ -11,7 +11,7 @@ int	main(void)
 	scanf("%d %d", &L, &P);
 	
 	i = 0;
-	while(i < 5)
+	while (i < 5)
 	{
 		scanf("%d", &article[i]);
 		i++;
