@@ -3,24 +3,29 @@
 int	main(void)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	t;
+	int	ans;
+	int	an;
+	int	m[5];
 
-	scanf("%d", &t);
-	
-	i = t / 300;
-	t = t % 300;
-	
-	j = t / 60;
-	t = t % 60;
-
-	k = t / 10;
-	t = t % 10;
-
-	if (t == 0)
-		printf("%d %d %d", i, j , k);
-	else
-		printf("-1");
+	i = 0;
+	while (i < 5)
+	{
+		scanf("%d", &m[i]);
+		i++;
+	}
+	ans = 0;
+	if (m[0] < 0)
+		m[1]++;
+	while (m[0] != m[1])
+	{
+		if (m[0] < 0)
+			ans = ans + m[2];
+		else if (m[0] == 0)
+			ans = ans + m[3];
+		else if (m[0] > 0)
+			ans = ans + m[4];
+		m[0]++;
+	}
+	printf("%d", ans);
 	return (0);
 }
